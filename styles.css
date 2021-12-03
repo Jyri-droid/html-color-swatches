@@ -27,8 +27,28 @@ h1 {
     font-size: 3rem;
 }
 
-p {
+label {
+    font-size: .75rem;
+    margin-right: .5rem;
+}
+
+form {
+    margin-top: 1rem;
+}
+
+input {
+    color: lightgray;
+    padding: .25rem;
     font-size: 1rem;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom: 1x solid grey;
+    background-color: transparent;
+}
+
+input::placeholder {
+    color: rgb(75, 75, 75);
 }
 
 button {
@@ -99,6 +119,6 @@ button {
   
 @media only screen and (max-width: 600px) {
     .colorSwatch {
-        flex-basis: calc(50% - .5rem);
+        flex-basis: calc(100% - 1rem);
     }
 }
