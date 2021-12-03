@@ -43,12 +43,19 @@ input {
     border-top-style: hidden;
     border-right-style: hidden;
     border-left-style: hidden;
-    border-bottom: 1x solid grey;
+    border-bottom: 1px solid grey;
     background-color: transparent;
 }
 
 input::placeholder {
     color: rgb(75, 75, 75);
+}
+
+input:focus {
+    border: none;
+    border-bottom: 1px solid lightsalmon;;
+    cursor: text;
+    outline: none;
 }
 
 button {
