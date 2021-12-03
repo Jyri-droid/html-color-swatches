@@ -99,6 +99,6 @@ button {
   
 @media only screen and (max-width: 600px) {
     .colorSwatch {
-        flex-basis: calc(100% - 1rem);
+        flex-basis: calc(50% - .5rem);
     }
 }
