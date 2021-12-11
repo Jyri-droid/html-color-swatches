@@ -44,21 +44,30 @@ addColorSwatch = (colorName, textColor) => {
     const colorSwatch = document.createElement("button");
     colorSwatch.classList.add("colorSwatch");
     colorSwatch.style.backgroundColor = colorName;
-    colorSwatch.style.color = textColor;
-    colorSwatch.innerHTML = colorSwatch.style.backgroundColor;
+    // Create text divs inside color swatch
+    const name = document.createElement("div");
+    name.style.color = textColor;
+    name.innerHTML = colorSwatch.style.backgroundColor;
+    const rgb = document.createElement("div");
+    rgb.style.color = textColor;
+    rgb.innerHTML = "<span class='material-icons'>content_copy</span>&nbsp;rgb&nbsp;" + toRgb(colorSwatch.style.backgroundColor)
     // Add event listeners
     colorSwatch.addEventListener("mouseover", function() {
-        colorSwatch.innerHTML = "<span class='material-icons'>content_copy</span>&nbsp;rgb&nbsp;" + toRgb(colorSwatch.style.backgroundColor);
+        name.style.top = "-2rem";
+        rgb.style.top = "-2rem";
     });
     colorSwatch.addEventListener("mouseleave", function() {
-        colorSwatch.innerHTML = colorSwatch.style.backgroundColor;
+        name.style.top = "0";
+        rgb.style.top = "0";
     });
     colorSwatch.addEventListener("click", function() {
         const rgbToCopy = toRgb(colorSwatch.style.backgroundColor);
         navigator.clipboard.writeText(rgbToCopy);
         showToaster("done", "Rgb value copied to clipboard!");
     });
-    // Append element to DOM
+    // Append elements to DOM
+    colorSwatch.appendChild(name);
+    colorSwatch.appendChild(rgb);
     document.getElementById("htmlColors").appendChild(colorSwatch);
 }
 
