@@ -43,31 +43,22 @@ addColorSwatch = (colorName, textColor) => {
     // Create & style element
     const colorSwatch = document.createElement("button");
     colorSwatch.classList.add("colorSwatch");
+    colorSwatch.innerHTML = colorName;
     colorSwatch.style.backgroundColor = colorName;
-    // Create text divs inside color swatch
-    const name = document.createElement("div");
-    name.style.color = textColor;
-    name.innerHTML = colorSwatch.style.backgroundColor;
-    const rgb = document.createElement("div");
-    rgb.style.color = textColor;
-    rgb.innerHTML = "<span class='material-icons'>content_copy</span>&nbsp;rgb&nbsp;" + toRgb(colorSwatch.style.backgroundColor)
+    colorSwatch.style.color = textColor;
     // Add event listeners
     colorSwatch.addEventListener("mouseover", function() {
-        name.style.top = "-2rem";
-        rgb.style.top = "-2rem";
+        colorSwatch.innerHTML = "<span class='material-icons'>content_copy</span>&nbsp;rgb&nbsp;" + toRgb(colorSwatch.style.backgroundColor);
     });
     colorSwatch.addEventListener("mouseleave", function() {
-        name.style.top = "0";
-        rgb.style.top = "0";
+        colorSwatch.innerHTML = colorName;
     });
     colorSwatch.addEventListener("click", function() {
         const rgbToCopy = toRgb(colorSwatch.style.backgroundColor);
         navigator.clipboard.writeText(rgbToCopy);
         showToaster("done", "Rgb value copied to clipboard!");
     });
-    // Append elements to DOM
-    colorSwatch.appendChild(name);
-    colorSwatch.appendChild(rgb);
+    // Append element to DOM
     document.getElementById("htmlColors").appendChild(colorSwatch);
 }
 
@@ -132,5 +123,5 @@ showToaster = (icon, text) => {
     var copiedNode = toaster[0].cloneNode(true);
     toaster[0].parentNode.replaceChild(copiedNode, toaster[0]);
     toaster[0].innerHTML = "<span class='material-icons toasterIcon'>" + icon + "</span>&nbsp;" + text;
-    toaster[0].style.animation = "toaster 3s ease-in-out";
+    toaster[0].style.animation = "toaster 4s ease-in-out";
 }
