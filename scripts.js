@@ -55,6 +55,7 @@ addColorSwatch = (colorName, textColor) => {
     colorSwatch.classList.add("colorSwatch");
     colorSwatch.innerHTML = colorName;
     colorSwatch.style.backgroundColor = colorName;
+    if (colorName == "black") { colorSwatch.style.border = "1px solid rgba(122,122,122,.5)"; }
     colorSwatch.style.color = textColor;
     // Add event listeners
     colorSwatch.addEventListener("mouseover", function() {
@@ -89,8 +90,7 @@ renderSwatches = (array) => {
         const colorName = array[i];
         // Decide text color based on luminosity
         let textColorBasedOnLuminance;
-        const luminance = getLuminance(colorName);
-        if (luminance > .35) {
+        if (getLuminance(colorName) > .35) {
             textColorBasedOnLuminance = "rgb(50,50,50)";
         } else {
             textColorBasedOnLuminance = "white";
@@ -157,8 +157,8 @@ document.getElementById("sortReverse").addEventListener("click", function(event)
 // SORTING ORDER
 
 document.getElementById("sortLuminance").addEventListener("click", function() {
-    this.classList.toggle("selected");
-    sortAlphabetical.classList.toggle("selected");
+    this.classList.add("selected");
+    sortAlphabetical.classList.remove("selected");
     let toRender = sortColorsByLuminance(getVisibleColors());
     if (sortInReverse) { 
         sortColorsInReverse(toRender); 
@@ -168,8 +168,8 @@ document.getElementById("sortLuminance").addEventListener("click", function() {
 });
 
 document.getElementById("sortAlphabetical").addEventListener("click", function() {
-    this.classList.toggle("selected");
-    sortLuminance.classList.toggle("selected");
+    this.classList.add("selected");
+    sortLuminance.classList.remove("selected");
     let toRender = sortColorsByAlphabet(getVisibleColors());
     if (sortInReverse) { 
         sortColorsInReverse(toRender); 
