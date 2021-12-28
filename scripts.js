@@ -100,9 +100,6 @@ renderSwatches = (array) => {
     }
 }
 
-// Render all swatches in the initial view
-renderSwatches(colorKeys);
-
 // SEARCH
 
 // Make a search through all color names
@@ -218,3 +215,6 @@ getVisibleColors = () => {
     }
     return visibleColors;
 }
+
+// Render all swatches in the initial view
+renderSwatches(sortColorsByAlphabet(colorKeys));
