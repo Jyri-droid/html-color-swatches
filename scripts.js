@@ -1,3 +1,13 @@
+// Show toaster
+const toaster = document.getElementsByClassName("toaster");
+showToaster = (icon, text) => {
+    // Copy toaster node and place it again so animation can run more than once
+    var copiedNode = toaster[0].cloneNode(true);
+    toaster[0].parentNode.replaceChild(copiedNode, toaster[0]);
+    toaster[0].innerHTML = "<span class='material-icons toasterIcon'>" + icon + "</span>&nbsp;" + text;
+    toaster[0].style.animation = "toaster 4s ease-in-out";
+}
+
 // Create an array with keys to the html color name object
 const colorKeys = Object.keys(wordToHex);
 
@@ -48,7 +58,7 @@ addColorSwatch = (colorName, textColor) => {
     colorSwatch.style.color = textColor;
     // Add event listeners
     colorSwatch.addEventListener("mouseover", function() {
-        colorSwatch.innerHTML = "<span class='material-icons'>content_copy</span>&nbsp;rgb&nbsp;" + toRgb(colorSwatch.style.backgroundColor);
+        colorSwatch.innerHTML = "<i class='material-icons'>content_copy</i>&nbsp;rgb&nbsp;" + toRgb(colorSwatch.style.backgroundColor);
     });
     colorSwatch.addEventListener("mouseleave", function() {
         colorSwatch.innerHTML = colorName;
@@ -93,7 +103,6 @@ renderSwatches = (array) => {
 // Render all swatches in the initial view
 renderSwatches(colorKeys);
 
-
 // SEARCH
 
 // Make a search through all color names
@@ -109,19 +118,103 @@ getColors = (searchWord) => {
 }
 
 // Render search result
-const inputElement = document.getElementById("search");
-inputElement.addEventListener("input", function() {
-    const currentValue = inputElement.value;
-    const foundColors = getColors(currentValue);
-    renderSwatches(foundColors);
+
+let sortInReverse;
+let sortBasedOnLuminance;
+
+document.getElementById("search").addEventListener("input", function() {
+    let sortable = [];
+    const currentValue = this.value;
+    let foundColors = getColors(currentValue);
+    if (sortBasedOnLuminance) { 
+        sortable = sortColorsByLuminance(foundColors);
+    } else { 
+        sortable = sortColorsByAlphabet(foundColors);
+    }
+    if (sortInReverse) { 
+        sortColorsInReverse(sortable); 
+    }
+    renderSwatches(sortable);
 });
 
-// Show toaster
-const toaster = document.getElementsByClassName("toaster");
-showToaster = (icon, text) => {
-    // Copy toaster node and place it again so animation can run more than once
-    var copiedNode = toaster[0].cloneNode(true);
-    toaster[0].parentNode.replaceChild(copiedNode, toaster[0]);
-    toaster[0].innerHTML = "<span class='material-icons toasterIcon'>" + icon + "</span>&nbsp;" + text;
-    toaster[0].style.animation = "toaster 4s ease-in-out";
+// REVERSE SORT
+
+document.getElementById("sortReverse").addEventListener("click", function(event) {
+    event.preventDefault();
+    if (this.innerHTML.includes("downward")) {
+        this.innerHTML = this.innerHTML.replace("downward", "upward");
+        let toRender = sortColorsInReverse(getVisibleColors());
+        renderSwatches(toRender);
+        sortInReverse = true;
+    } else {
+        this.innerHTML = this.innerHTML.replace("upward", "downward");
+        let toRender = sortColorsInReverse(getVisibleColors());
+        renderSwatches(toRender);
+        sortInReverse = false;
+    }
+});
+
+// SORTING ORDER
+
+document.getElementById("sortLuminance").addEventListener("click", function() {
+    this.classList.toggle("selected");
+    sortAlphabetical.classList.toggle("selected");
+    let toRender = sortColorsByLuminance(getVisibleColors());
+    if (sortInReverse) { 
+        sortColorsInReverse(toRender); 
+    }
+    renderSwatches(toRender);
+    sortBasedOnLuminance = true;
+});
+
+document.getElementById("sortAlphabetical").addEventListener("click", function() {
+    this.classList.toggle("selected");
+    sortLuminance.classList.toggle("selected");
+    let toRender = sortColorsByAlphabet(getVisibleColors());
+    if (sortInReverse) { 
+        sortColorsInReverse(toRender); 
+    }
+    renderSwatches(toRender);
+    sortBasedOnLuminance = false;
+});
+
+// Sort array in reverse, alphabetical or luminance order
+
+sortColorsInReverse = (array) => {
+    array.reverse();
+    return array;
+}
+
+sortColorsByAlphabet = (array) => {
+    let sortable = [];
+    for (i = 0; i < array.length; i++) {
+        sortable.push(array[i]);
+    }
+    sortable.sort();
+    return sortable;
+}
+
+sortColorsByLuminance = (array) => {
+    let sortable = [];
+    for (i = 0; i < array.length; i++) {
+        sortable.push([array[i], getLuminance(array[i])]);
+    }
+    sortable.sort(function(a, b) {
+        return a[1] - b[1];
+    });
+    const sorted = [];
+    for (i = 0; i < sortable.length; i++) {
+        sorted.push(sortable[i][0]);
+    }
+    return sorted;
+}
+
+// Get all swatches that are visible on the screen
+getVisibleColors = () => {
+    const visibleSwatches = document.getElementsByClassName("colorSwatch");
+    const visibleColors = [];
+    for (i of visibleSwatches) {
+        visibleColors.push(i.style.backgroundColor);
+    }
+    return visibleColors;
 }

@@ -12,10 +12,20 @@
     <div class="toaster"></div>
     <div class="header">
         <h1>HTML colors</h1>
-        <form >
-            <label for="search">Search by name</label>
-            <input type="text" id="search" name="search" placeholder="Enter color name" autocomplete="off">
-        </form>
+        <div class="controls">
+            <form>
+                <label for="search">Search</label>
+                <input type="text" id="search" name="search" placeholder="Enter color name" autocomplete="off">
+            </form>
+            <form>
+                <label>Sorting</label>
+                <div>
+                    <button type="button" id="sortAlphabetical" class="segmentedButton selected">Alphabetical</button>
+                    <button type="button" id="sortLuminance" class="segmentedButton">Luminance</button>
+                    <button type="button" id="sortReverse"><i class="material-icons">arrow_downward</i></button>
+                </div>
+            </form>
+        </div>
     </div> 
     <div class="container" id="htmlColors"></div>
 

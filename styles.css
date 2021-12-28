@@ -14,33 +14,35 @@ body {
     background-color: black;
 }
 
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 3rem;
-}
-
 .header {
-    margin: 3rem;
+    margin: 2rem 3rem 1rem 3rem;
     padding: .5rem;
 }
+
 
 h1 {
     font-weight: 200;
     font-size: 3rem;
 }
 
-label {
-    font-size: .75rem;
-    margin-right: .5rem;
+.controls {
+    display: flex;
+    margin-top: 2rem;
 }
 
 form {
-    margin-top: 1rem;
+    font-size: 0;
+    display: flex;
+}
+
+label {
+    font-size: .75rem;
+    margin: .3rem .5rem 0 0;
 }
 
 input {
     color: lightgray;
+    width: 11.5rem;
     padding: .25rem;
     font-size: 1rem;
     border-top-style: hidden;
@@ -48,6 +50,7 @@ input {
     border-left-style: hidden;
     border-bottom: 1px solid grey;
     background-color: transparent;
+    margin-right: 1.75rem;
 }
 
 input::placeholder {
@@ -56,7 +59,7 @@ input::placeholder {
 
 input:focus {
     border: none;
-    border-bottom: 1px solid lightsalmon;;
+    border-bottom: 1px solid royalblue;
     cursor: text;
     outline: none;
 }
@@ -64,6 +67,54 @@ input:focus {
 button {
     outline: none;
     border: none;
+    background-color: transparent;
+}
+
+.segmentedButton {
+    height: 1.5rem;
+    border: 2px solid grey;
+    padding: 0 .75rem 0 .75rem;
+    color: rgb(75, 75, 75);
+}
+
+.segmentedButton:first-of-type {
+    border-radius: .5rem 0 0 .5rem;
+    border-right: 1px solid royalblue;
+}
+
+.segmentedButton:nth-of-type(2) {
+    border-radius: 0 .5rem .5rem 0;
+    border-left: 1px solid royalblue;
+}
+
+.segmentedButton.selected {
+    border-color: royalblue;
+    color: lightgray;
+}
+
+.segmentedButton:hover {
+    transition: color .2s;
+    color: lightgray;
+}
+
+#sortReverse {
+    position: absolute;
+    margin-left: .25rem;
+}
+
+#sortReverse > i {
+    transition: color .2s;
+    font-size: 1.5rem;
+}
+
+#sortReverse:hover {
+    color: royalblue;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 3rem 3rem 3rem;
 }
 
 .colorSwatch {
@@ -117,12 +168,30 @@ button {
 }
 
 @media only screen and (max-width: 800px) {
+    form {
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+    }
+    input {
+        width: 14rem;
+        margin-top: .25rem;
+    }
+    .segmentedButton, button > i {
+        margin-top: .5rem;
+    }
     .colorSwatch {
         flex-basis: calc((100%/3) - 1rem);
     }
 }
   
 @media only screen and (max-width: 600px) {
+    .controls {
+        display: block;
+    }
+    form {
+        margin-bottom: 1rem;
+    }
     .colorSwatch {
         flex-basis: calc(100% - 1rem);
     }
