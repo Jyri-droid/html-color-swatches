@@ -2,7 +2,7 @@
 const toaster = document.getElementsByClassName("toaster");
 showToaster = (icon, text) => {
     // Copy toaster node and place it again so animation can run more than once
-    var copiedNode = toaster[0].cloneNode(true);
+    const copiedNode = toaster[0].cloneNode(true);
     toaster[0].parentNode.replaceChild(copiedNode, toaster[0]);
     toaster[0].innerHTML = "<span class='material-icons toasterIcon'>" + icon + "</span>&nbsp;" + text;
     toaster[0].style.animation = "toaster 4s ease-in-out";
