@@ -1,6 +1,6 @@
 // Show toaster
 const toaster = document.getElementsByClassName("toaster");
-showToaster = (icon, text) => {
+const showToaster = (icon, text) => {
     // Copy toaster node and place it again so animation can run more than once
     const copiedNode = toaster[0].cloneNode(true);
     toaster[0].parentNode.replaceChild(copiedNode, toaster[0]);
@@ -12,10 +12,10 @@ showToaster = (icon, text) => {
 const colorKeys = Object.keys(wordToHex);
 
 // Create a function to convert color name to hex
-toHex = (color) => wordToHex[color.toLowerCase()];
+const toHex = (color) => wordToHex[color.toLowerCase()];
 
 // Create a function to convert color name to rgb
-toRgb = (color) => {
+const toRgb = (color) => {
     const hex = toHex(color);
     let r = 0, g = 0, b = 0;
     // Hex with 3 digits
@@ -33,7 +33,7 @@ toRgb = (color) => {
 }
 
 // Create a function to check Luminance and return a number between 0 and 1
-getLuminance = (color) => {
+const getLuminance = (color) => {
     const getRgbValues = new RegExp("\\d+", "g");
     const rgbArray = toRgb(color).match(getRgbValues);
     let r = rgbArray[0], g = rgbArray[1], b = rgbArray[2];
@@ -49,7 +49,7 @@ getLuminance = (color) => {
 }
 
 // Create a function to build one single color swatch
-addColorSwatch = (colorName, textColor) => {
+const addColorSwatch = (colorName, textColor) => {
     // Create & style element
     const colorSwatch = document.createElement("button");
     colorSwatch.classList.add("colorSwatch");
@@ -74,14 +74,14 @@ addColorSwatch = (colorName, textColor) => {
 }
 
 // Create a function to remove all children of a node
-removeAllChildNodes = (parent) => {
+const removeAllChildNodes = (parent) => {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
 }
 
 // Create a swatch for each color in an array
-renderSwatches = (array) => {
+const renderSwatches = (array) => {
     // Clear old swatches
     removeAllChildNodes(document.getElementById("htmlColors"));
     // Render new swatches
@@ -103,7 +103,7 @@ renderSwatches = (array) => {
 // SEARCH
 
 // Make a search through all color names
-getColors = (searchWord) => {
+const getColors = (searchWord) => {
     const pattern = new RegExp(searchWord, "i");
     let searchResults = [];
     for (let i = 0; i < colorKeys.length; i++) {
@@ -177,12 +177,12 @@ document.getElementById("sortAlphabetical").addEventListener("click", function()
 
 // Sort array in reverse, alphabetical or luminance order
 
-sortColorsInReverse = (array) => {
+const sortColorsInReverse = (array) => {
     array.reverse();
     return array;
 }
 
-sortColorsByAlphabet = (array) => {
+const sortColorsByAlphabet = (array) => {
     let sortable = [];
     for (i = 0; i < array.length; i++) {
         sortable.push(array[i]);
@@ -191,7 +191,7 @@ sortColorsByAlphabet = (array) => {
     return sortable;
 }
 
-sortColorsByLuminance = (array) => {
+const sortColorsByLuminance = (array) => {
     let sortable = [];
     for (i = 0; i < array.length; i++) {
         sortable.push([array[i], getLuminance(array[i])]);
@@ -207,7 +207,7 @@ sortColorsByLuminance = (array) => {
 }
 
 // Get all swatches that are visible on the screen
-getVisibleColors = () => {
+const getVisibleColors = () => {
     const visibleSwatches = document.getElementsByClassName("colorSwatch");
     const visibleColors = [];
     for (i of visibleSwatches) {
